@@ -1,0 +1,60 @@
+﻿@model IEnumerable<HPMS.Models.Patient>
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h1>Search Results</h1>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form asp-action="Search" method="get" class="d-flex">
+            <input type="text" name="searchTerm" class="form-control me-2" placeholder="Search by name, patient number, or phone..." value="@ViewBag.SearchTerm" />
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Back to Dashboard</a>
+        </form>
+    </div>
+</div>
+
+@if (ViewBag.SearchResultCount != null)
+{
+    <div class="alert alert-info">
+        Found @ViewBag.SearchResultCount patient(s) matching "@ViewBag.SearchTerm".
+    </div>
+}
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Patient Number</th>
+                    <th>Full Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Action</th>
+            </thead>
+            <tbody>
+                @foreach (var patient in Model)
+                {
+                    <tr>
+                        <td>@patient.PatientNumber</td>
+                        <td>@patient.FullName</td>
+                        <td>@patient.Phone</td>
+                        <td>@patient.Email</td>
+                        <td>
+                            <a asp-controller="Patient" asp-action="Details" asp-route-id="@patient.PatientId" class="btn btn-sm btn-info">View</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        No patients found matching "@ViewBag.SearchTerm".
+    </div>
+}

@@ -1,0 +1,89 @@
+﻿@model HPMS.Models.Doctor
+
+@{
+    ViewData["Title"] = "Add Doctor";
+}
+
+<h1>Add New Doctor</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label class="control-label">Select User</label>
+        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserList">
+            <option value="">-- Select User --</option>
+        </select>
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Specialization" class="control-label"></label>
+        <input asp-for="Specialization" class="form-control" />
+        <span asp-validation-for="Specialization" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SubSpecialization" class="control-label"></label>
+        <input asp-for="SubSpecialization" class="form-control" />
+        <span asp-validation-for="SubSpecialization" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LicenseNumber" class="control-label"></label>
+        <input asp-for="LicenseNumber" class="form-control" />
+        <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="YearsOfExperience" class="control-label"></label>
+        <input asp-for="YearsOfExperience" class="form-control" />
+        <span asp-validation-for="YearsOfExperience" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Qualification" class="control-label"></label>
+        <textarea asp-for="Qualification" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Qualification" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ConsultationFee" class="control-label"></label>
+        <input asp-for="ConsultationFee" class="form-control" />
+        <span asp-validation-for="ConsultationFee" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmergencyFee" class="control-label"></label>
+        <input asp-for="EmergencyFee" class="form-control" />
+        <span asp-validation-for="EmergencyFee" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RoomNumber" class="control-label"></label>
+        <input asp-for="RoomNumber" class="form-control" />
+        <span asp-validation-for="RoomNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Bio" class="control-label"></label>
+        <textarea asp-for="Bio" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Bio" class="text-danger"></span>
+    </div>
+
+    <div class="form-group form-check">
+        <input class="form-check-input" asp-for="IsAvailable" />
+        <label class="form-check-label" asp-for="IsAvailable"></label>
+    </div>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

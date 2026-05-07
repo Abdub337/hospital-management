@@ -1,0 +1,129 @@
+﻿@model IEnumerable<HPMS.Models.Patient>
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>Hospital Management System Dashboard</h1>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Patients</h5>
+                <h2 class="card-text">@ViewBag.TotalPatients</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Active Patients</h5>
+                <h2 class="card-text">@ViewBag.ActivePatients</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Today's Appointments</h5>
+                <h2 class="card-text">@ViewBag.TodayAppointments</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Upcoming Appointments</h5>
+                <h2 class="card-text">@ViewBag.UpcomingAppointments</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Recent Patients</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient Number</th>
+                            <th>Full Name</th>
+                            <th>Phone</th>
+                            <th>Registered Date</th>
+                            <th>Action</th>
+                    </thead>
+                    <tbody>
+                        @foreach (var patient in Model)
+                        {
+                            <tr>
+                                <td>@patient.PatientNumber</td>
+                                <td>@patient.FullName</td>
+                                <td>@patient.Phone</td>
+                                <td>@patient.CreatedAt.ToShortDateString()</td>
+                                <td>
+                                    <a asp-controller="Patient" asp-action="Details" asp-route-id="@patient.PatientId" class="btn btn-sm btn-info">View</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Today's Appointments</h4>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.RecentAppointments != null && ViewBag.RecentAppointments.Count > 0)
+                {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                        </thead>
+                        <tbody>
+                            @foreach (var apt in ViewBag.RecentAppointments)
+                            {
+                                <tr>
+                                    <td>@apt.AppointmentDateTime.ToString("HH:mm")</td>
+                                    <td>@apt.Patient?.FullName</td>
+                                    <td>@apt.Type</td>
+                                    <td>@apt.Status</td>
+                                    <td>
+                                        <a asp-controller="Appointment" asp-action="Edit" asp-route-id="@apt.AppointmentId" class="btn btn-sm btn-info">View</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No appointments scheduled for today.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <a asp-controller="Patient" asp-action="Register" class="btn btn-primary">Register New Patient</a>
+        <a asp-controller="Patient" asp-action="Index" class="btn btn-secondary">View All Patients</a>
+        <a asp-controller="Appointment" asp-action="Create" class="btn btn-info">Schedule Appointment</a>
+    </div>
+</div>

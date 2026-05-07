@@ -1,0 +1,63 @@
+﻿@model IEnumerable<HPMS.Models.Doctor>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctors List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Doctors List</h2>
+
+    <p>Total Doctors: @Model.Count()</p>
+
+    @if (Model.Count() == 0)
+    {
+        <p>No doctors found.</p>
+    }
+    else
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor Number</th>
+                    <th>Doctor Name</th>
+                    <th>Specialization</th>
+                    <th>License Number</th>
+                    <th>Fee</th>
+                    <th>Status</th>
+            </thead>
+            <tbody>
+                @foreach (var doctor in Model)
+                {
+                    <tr>
+                        <td>@doctor.DoctorNumber</td>
+                        <td>@(doctor.User?.FullName ?? "No Name")</td>
+                        <td>@doctor.Specialization</td>
+                        <td>@doctor.LicenseNumber</td>
+                        <td>@doctor.ConsultationFee.ToString("C")</td>
+                        <td>@(doctor.IsAvailable ? "Available" : "Unavailable")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</body>
+</html>

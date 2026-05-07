@@ -1,0 +1,74 @@
+﻿@model IEnumerable<HPMS.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<h1>Appointments</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Schedule New Appointment</a>
+</p>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Appointment #</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date & Time</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="7">No appointments found. Click "Schedule New Appointment" to create one.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.AppointmentNumber</td>
+                    <td>@(item.Patient?.FullName ?? "N/A")</td>
+                    <td>@(item.Doctor?.User?.FullName ?? "N/A")</td>
+                    <td>@item.AppointmentDateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@item.Type</td>
+                    <td>
+                        @if (item.Status == "Cancelled")
+                        {
+                            <span>Cancelled</span>
+                        }
+                        else if (item.Status == "Completed")
+                        {
+                            <span>Completed</span>
+                        }
+                        else
+                        {
+                            <span>Scheduled</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a>
+                        @if (item.Status != "Cancelled" && item.Status != "Completed")
+                        {
+                            <a asp-action="Cancel" asp-route-id="@item.AppointmentId">Cancel</a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

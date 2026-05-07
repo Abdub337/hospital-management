@@ -1,0 +1,87 @@
+﻿@model HPMS.Models.Doctor
+
+@{
+    ViewData["Title"] = "Edit Doctor";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="card-title">Edit Doctor Information</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <input type="hidden" name="DoctorId" value="@Model.DoctorId" />
+                        <input type="hidden" name="DoctorNumber" value="@Model.DoctorNumber" />
+                        <input type="hidden" name="UserId" value="@Model.UserId" />
+
+                        <div class="form-group">
+                            <label>Specialization</label>
+                            <input name="Specialization" class="form-control" value="@Model.Specialization" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sub Specialization</label>
+                            <input name="SubSpecialization" class="form-control" value="@Model.SubSpecialization" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>License Number</label>
+                            <input name="LicenseNumber" class="form-control" value="@Model.LicenseNumber" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Years of Experience</label>
+                            <input name="YearsOfExperience" class="form-control" type="number" value="@Model.YearsOfExperience" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Qualification</label>
+                            <textarea name="Qualification" class="form-control" rows="2">@Model.Qualification</textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Consultation Fee</label>
+                                    <input name="ConsultationFee" class="form-control" type="number" step="0.01" value="@Model.ConsultationFee" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Emergency Fee</label>
+                                    <input name="EmergencyFee" class="form-control" type="number" step="0.01" value="@Model.EmergencyFee" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Room Number</label>
+                            <input name="RoomNumber" class="form-control" value="@Model.RoomNumber" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Bio</label>
+                            <textarea name="Bio" class="form-control" rows="3">@Model.Bio</textarea>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" name="IsAvailable" type="checkbox" value="true" id="isAvailable" @(Model.IsAvailable ? "checked" : "") />
+                            <label class="form-check-label" for="isAvailable">
+                                Is Available for Appointments
+                            </label>
+                            <input type="hidden" name="IsAvailable" value="false" />
+                        </div>
+
+                        <div class="form-group text-center mt-4">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
